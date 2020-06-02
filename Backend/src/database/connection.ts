@@ -1,13 +1,12 @@
 import knex from 'knex';
-import path from 'path'; // p lidar com caminhos, rotas
-// path.resolve: a função uni caminhos
-// __dirname: retorna o diretorio do arquivo q estamos executando a variável, neste caso 'database'
+import path from 'path';
 
-const connection = {
-  client: 'sqlite3', // nome do BD
+const connection = knex({
+  client: 'sqlite3',
   connection: {
-    filename: path.resolve(__dirname, 'database.sqlite'), //1° local, 2° nome
-  }
-}
+    filename: path.resolve(__dirname, 'tadabase.sqlite'),
+  },
+  useNullAsDefault: true,
+});
 
-export default connection;
+export default connection; 

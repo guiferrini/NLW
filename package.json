@@ -6,7 +6,8 @@
   "author": "Guilherme Ferrini <guilhermemferrini@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev Backend/src/server.ts"
+    "dev": "ts-node-dev Backend/src/server.ts",
+    "knex:migrate": "knex migrate:latest --knexfile knexfile.ts migrate:latest"
   },
   "dependencies": {
     "express": "^4.17.1",
