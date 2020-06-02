@@ -8,5 +8,8 @@ module.exports = {
   migrations: { //onde será salvo a migration/tabela
     directory: path.resolve(__dirname, 'Backend', 'src', 'database', 'migrations'),
   },
+  seeds: { //onde será salvo a migration/tabela
+    directory: path.resolve(__dirname, 'Backend', 'src', 'database', 'seeds'),
+  },
   useNullAsDefault: true,
 };
