@@ -1,20 +1,14 @@
-import express from 'express';
+import express, { request, response } from 'express';
+
+import routes from './routes';
 
 const app = express();
+app.use(express.json());
+
 const PORT = 3333;
 
-app.get('/', (request, response) => {
-  console.log('Server Connected');
-  //response.send('Texto Simples'); String
-  //response.json({message: 'Hello World'}); Objeto, informação única
-  response.json([ //Array, lista de informações
-    'Gui',
-    'joão',
-    'David',
-    'Carlos',
-    'zé',
-    'Su',
-  ]);
-});
+app.use(routes);   
 
-app.listen(PORT);
+app.listen(PORT, () => {
+  console.log('Server connected ✅');
+});
