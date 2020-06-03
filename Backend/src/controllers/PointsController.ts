@@ -3,6 +3,20 @@ import { Request, Response } from 'express'
 import knex from '../database/connection'; // Connection witd Database
 
 class PointsController {
+  async show(resquest: Request, response: Response) {
+    const { id } = resquest.params;
+
+    // na tabela 'points', where id for = {id}, eu quero buscar o 1° e unico (id é único)
+    const point = await knex('points').where('id', id).first();
+
+    // se n encontrei nenhum id, retorna erro
+    if (!point) {
+      return response.status(400).json({ message: 'Point not found.' })
+    }
+
+    return response.json(point);
+  }
+
   async create(resquest: Request, response: Response) {
     const {
       name,
