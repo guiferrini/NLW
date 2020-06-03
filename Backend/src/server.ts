@@ -2,11 +2,15 @@ import express, { request, response } from 'express';
 
 import routes from './routes';
 import path from 'path';
+import cors from 'cors';
 
 const app = express();
-app.use(express.json());
-
 const PORT = 3333;
+
+app.use(cors({
+  //origin: 'www....'
+}));
+app.use(express.json());
 
 app.use(routes);   
 
