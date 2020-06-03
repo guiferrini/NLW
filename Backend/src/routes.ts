@@ -11,6 +11,7 @@ routes.get('/items', itemsController.index);
 
 //routes.post('/points', td q esta em pointsController.ts);
 routes.post('/points', pointsController.create);
+routes.get('/points', pointsController.index);
 routes.get('/points/:id', pointsController.show);
 
 

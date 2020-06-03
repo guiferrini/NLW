@@ -3,8 +3,28 @@ import { Request, Response } from 'express'
 import knex from '../database/connection'; // Connection witd Database
 
 class PointsController {
-  async show(resquest: Request, response: Response) {
-    const { id } = resquest.params;
+  async index(request: Request, response: Response) {
+    // Filtro(Query): Cidade, UF, items
+    const { city, uf, items } = request.query; //informar o formato qdo receber por query
+
+    const checkItems = String(items)
+      .split(',')
+      .map(item => Number(item.trim())) //trim: retirar espaços caso tenha
+
+    //Bsca tds os ptos, em q pelo - 1 (whereIn) item q esta dentro do q estou recebendo (checkItems) 
+    const points = await knex('points')
+      .join('point_items', 'points.id', '=', 'point_items.point_id')
+      .whereIn('point_items.item_id', checkItems)
+      .where('city', String(city))
+      .where('uf', String(uf))
+      .distinct() //caso um pto tenha masi d 1 item do filtro, retorna o pto 1 vez só
+      .select('points.*'); // quero buscar os dados da tabela points e não da tabela join
+
+    return response.json(points);
+  }
+
+  async show(request: Request, response: Response) {
+    const { id } = request.params;
 
     // na tabela 'points', where id for = {id}, eu quero buscar o 1° e unico (id é único)
     const point = await knex('points').where('id', id).first();
@@ -31,7 +51,7 @@ class PointsController {
     return response.json({ point, items });
   }
 
-  async create(resquest: Request, response: Response) {
+  async create(request: Request, response: Response) {
     const {
       name,
       email,
@@ -41,11 +61,11 @@ class PointsController {
       city,
       uf,
       items
-    } = resquest.body;
+    } = request.body;
   
     // trx = transaction - ferramenta do knex. 
     //Temos 2 inserts indepententes, se 1 der erro n quero q o outro execute, usar trx no lugar do knex
-    //knex/trx('tabela').o será feito
+    //knex/trx('tabela').o será feito - no final, await trx.commit();
     const trx = await knex.transaction()
 
     const point = {
@@ -71,6 +91,8 @@ class PointsController {
     });
   
     await trx('point_items').insert(pointItems);
+
+    await trx.commit(); // esse comento faz o insert na bd
   
   
     return response.json({
