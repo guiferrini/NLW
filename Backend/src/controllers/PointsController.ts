@@ -1,6 +1,6 @@
 //O ts n sabe o formato de resquest e response entao informo o formato manualmente
 import { Request, Response } from 'express'
-import knex from '../database/connection';
+import knex from '../database/connection'; // Connection witd Database
 
 class PointsController {
   async create(resquest: Request, response: Response) {
