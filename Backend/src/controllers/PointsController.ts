@@ -19,8 +19,8 @@ class PointsController {
     //Temos 2 inserts indepententes, se 1 der erro n quero q o outro execute, usar trx no lugar do knex
     //knex/trx('tabela').o será feito
     const trx = await knex.transaction()
-  
-    const idNewPoint = await trx('points').insert({
+
+    const point = {
       image: 'imagem-fake-p n ficar vazio',
       name,
       email,
@@ -29,20 +29,26 @@ class PointsController {
       longitude,
       city,
       uf
-    });
+    }
   
+    const idNewPoint = await trx('points').insert(point);
+    const point_id = idNewPoint[0];
+   
     //relacionamento com a tabela de Items
     const pointItems = items.map((item_id: number) => {
       return {
         item_id,
-        point_id: idNewPoint[0],
+        point_id,
       };
     });
   
     await trx('point_items').insert(pointItems);
   
   
-    return response.json({ success: 'true' }); 
+    return response.json({
+      id: point_id,
+      ...point, //... tds infos, n so a ultima
+    }); 
   }
 }
 
