@@ -31,8 +31,12 @@ routes.post('/points', async (resquest, response) => {
     items
   } = resquest.body;
 
-  //knex('tabela').o será feito
-  const ids = await knex('points').insert({
+  // trx = transaction - ferramenta do knex. 
+  //Temos 2 inserts indepententes, se 1 der erro n quero q o outro execute, usar trx no lugar do knex
+  //knex/trx('tabela').o será feito
+  const trx = await knex.transaction()
+
+  const idNewPoint = await trx('points').insert({
     image: 'imagem-fake-p n ficar vazio',
     name,
     email,
@@ -47,11 +51,11 @@ routes.post('/points', async (resquest, response) => {
   const pointItems = items.map((item_id: number) => {
     return {
       item_id,
-      point_id: ids[0],
+      point_id: idNewPoint[0],
     };
   });
 
-  await knex('point_items').insert(pointItems);
+  await trx('point_items').insert(pointItems);
 
 
   return response.json({ success: 'true' });
