@@ -32,7 +32,7 @@ routes.post('/points', async (resquest, response) => {
   } = resquest.body;
 
   //knex('tabela').o será feito
-  await knex('points').insert({
+  const ids = await knex('points').insert({
     image: 'imagem-fake-p n ficar vazio',
     name,
     email,
@@ -42,6 +42,17 @@ routes.post('/points', async (resquest, response) => {
     city,
     uf
   });
+
+  //relacionamento com a tabela de Items
+  const pointItems = items.map((item_id: number) => {
+    return {
+      item_id,
+      point_id: ids[0],
+    };
+  });
+
+  await knex('point_items').insert(pointItems);
+
 
   return response.json({ success: 'true' });
 });
