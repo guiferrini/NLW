@@ -1,7 +1,7 @@
 import express, { response, request } from 'express';
 
-import PointsController from './controllers/pointsController';
-import ItemsController from './controllers/itemsController';
+import PointsController from './controllers/PointsController';
+import ItemsController from './controllers/ItemsController';
 
 const routes = express.Router();
 const pointsController = new PointsController(); //criação da intancia da class
