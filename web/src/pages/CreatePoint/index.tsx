@@ -39,8 +39,15 @@ const CreatePoint = () => {
   //buscar e armazenar cidade e estado por UF
   const [ufs, setUfs] = useState<string[]>([])
   const [cities, setCities] = useState<string[]>([]);
+  const [selectedItems, setSelectedItems] = useState<number[]>([]); //armazena os items selecionados pelo usuario
 
   const [initialPosition, setInitialPosition] = useState<[number, number]>([0,0]); //armezana longitude e latitude do cliente ao abrir app
+
+  const [inputData, setInputData] = useState({ //armazena os dados de tds Inputs
+    name: '',
+    email: '',
+    whatsapp: '',
+  });
 
   const [selectedUf, setSelectedUf] = useState('0'); //armazena a UF selecionada pelo usuario
   const [selectedCity, setSelectedCity] = useState('0'); //armazena a Cidade selecionada pelo usuario
@@ -100,6 +107,27 @@ const CreatePoint = () => {
     ])
   }
 
+  //Armazenamento de Input - área: Dados
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+
+    setInputData({ ...inputData, [name]: value }); //'name' é generico p tds, tds tem 'name', value é o nome, email e whatsapp
+  } 
+
+  //Armazenamento de Items selecionados pelo usuaario
+  function handleSelectItem(id: number) {
+    const alredySelected = selectedItems.findIndex(item => item === id); //se retonar -1 n esta selecionado (encontrado)
+    //verifica se item selecionado já estava selecionado anteriormente
+    if (alredySelected >= 0) {
+      //se já estava selecionado, remove
+      const filteredItems = selectedItems.filter(item => item !== id);
+      setSelectedItems(filteredItems)
+    } else {
+      //se n estava selecionado, adiciona
+      setSelectedItems([ ...selectedItems, id])
+    }
+  }
+
   return (
     <div id="page-create-point">
       <header>
@@ -124,6 +152,7 @@ const CreatePoint = () => {
                 type="text"
                 name="name"
                 id="name"
+                onChange={handleInputChange}
               />
             </div>
             
@@ -134,6 +163,7 @@ const CreatePoint = () => {
                   type="text"
                   name="email"
                   id="email"
+                  onChange={handleInputChange}
                 />
               </div>
               <div className="field">
@@ -142,6 +172,7 @@ const CreatePoint = () => {
                   type="text"
                   name="whatsapp"
                   id="whatsapp"
+                  onChange={handleInputChange}
                 />
               </div>
             </div>
@@ -192,7 +223,11 @@ const CreatePoint = () => {
 
             <ul className="items-grid">
               {items.map(item => (
-                <li key={item.id}>
+                <li 
+                  key={item.id} 
+                  onClick={() => handleSelectItem(item.id) }
+                  className={selectedItems.includes(item.id) ? 'selected' : ''}
+                >
                   <img src={item.image_url} alt={item.title}/>
                   <span>{item.title}</span>
               </li>
