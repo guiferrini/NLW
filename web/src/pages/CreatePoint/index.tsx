@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
+import axios from 'axios';
 import api from '../../services/api';
 
 import './styles.css';
 
 import logo from '../../assets/logo.svg';
+import { response } from 'express';
 
 interface Item {
   id: number;
@@ -14,13 +16,31 @@ interface Item {
   image_url: string;
 }
 
+interface UF {
+  sigla: string;
+  nome: string;
+}
+
 const CreatePoint = () => {
+  // buscar e armazenar items do backend
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
     api.get('items').then(response => {
       setItems(response.data);
     })
+  }, []);
+
+  //buscar e armazenar cidade e estado por UF
+  const[ufs, setUfs] = useState<string[]>([])
+
+  useEffect(() => {
+    axios.get<UF[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
+      .then(response => {
+        const ufSigla = response.data.map(uf => uf.sigla);
+
+        setUfs(ufSigla);
+      });
   }, []);
 
   return (
@@ -90,6 +110,9 @@ const CreatePoint = () => {
                 <label htmlFor="uf">Estado (UF)</label>
                 <select name="uf" id="uf">
                   <option value="0">Selecione uma UF</option>
+                  {ufs.map(uf => (
+                    <option key={uf} value={uf}>{uf}</option>
+                  ))}
                 </select>
               </div>
               <div className="field">
