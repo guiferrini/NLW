@@ -1,5 +1,5 @@
 import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
 import axios from 'axios';
@@ -53,6 +53,8 @@ const CreatePoint = () => {
   const [selectedCity, setSelectedCity] = useState('0'); //armazena a Cidade selecionada pelo usuario
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0,0]); //armezana longitude e latitude qdo cliente clica no mapa
     
+  const history = useHistory();
+
   //Qdo usuario iniciar app, informa localização atual dele
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
@@ -129,7 +131,7 @@ const CreatePoint = () => {
   }
 
   //Envio do formulário p API
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
     const { name, email, whatsapp } = inputData;
@@ -147,10 +149,13 @@ const CreatePoint = () => {
       latitude,
       longitude,
       items,
-    }
+    };
 
-    console.log(data);
+    await api.post('points', data);
+    
+    alert('Ponto de coleta Criado!');
 
+    history.push('/');
   }
 
   return (
