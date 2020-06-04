@@ -40,10 +40,21 @@ const CreatePoint = () => {
   const [ufs, setUfs] = useState<string[]>([])
   const [cities, setCities] = useState<string[]>([]);
 
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([0,0]); //armezana longitude e latitude do cliente ao abrir app
+
   const [selectedUf, setSelectedUf] = useState('0'); //armazena a UF selecionada pelo usuario
   const [selectedCity, setSelectedCity] = useState('0'); //armazena a Cidade selecionada pelo usuario
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0,0]); //armezana longitude e latitude qdo cliente clica no mapa
     
+  //Qdo usuario iniciar app, informa localização atual dele
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(position => {
+      const { latitude, longitude } = position.coords;
+
+      setInitialPosition([ latitude, longitude ]);
+    });
+  }, []);
+
   //busca de UFs - 1° informação
   useEffect(() => {
     axios.get<UF[]>('https://servicodados.ibge.gov.br/api/v1/localidades/estados')
@@ -142,7 +153,7 @@ const CreatePoint = () => {
               <span>Selecione o endereço no mapa</span>
             </legend>
 
-            <Map center={[-23.0436052, -46.9780466]} zoom={15} onClick={handleMapClick}> 
+            <Map center={initialPosition} zoom={15} onClick={handleMapClick}> 
               <TileLayer 
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
