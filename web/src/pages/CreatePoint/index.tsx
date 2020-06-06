@@ -42,8 +42,8 @@ const CreatePoint = () => {
   const [ufs, setUfs] = useState<string[]>([])
   const [cities, setCities] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<number[]>([]); //armazena os items selecionados pelo usuario
-
   const [initialPosition, setInitialPosition] = useState<[number, number]>([0,0]); //armezana longitude e latitude do cliente ao abrir app
+  const [selectedFile, setSelectedFile] = useState<File>(); // armazena imagem do ponto de coleta
 
   const [inputData, setInputData] = useState({ //armazena os dados de tds Inputs
     name: '',
@@ -136,6 +136,9 @@ const CreatePoint = () => {
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
+    console.log(selectedFile);
+    return;
+
     const { name, email, whatsapp } = inputData;
     const uf = selectedUf;
     const city = selectedCity;
@@ -174,7 +177,7 @@ const CreatePoint = () => {
       <form onSubmit={handleSubmit}>
         <h1>Cadastro do Ponto de Coleta</h1>
 
-          <Dropzone /> 
+          <Dropzone onFileUploaded={setSelectedFile} />
 
           <fieldset>
             <legend>
