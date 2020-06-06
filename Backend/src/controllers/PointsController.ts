@@ -83,11 +83,14 @@ class PointsController {
     const point_id = idNewPoint[0];
    
     //relacionamento com a tabela de Items
-    const pointItems = items.map((item_id: number) => {
-      return {
-        item_id,
-        point_id,
-      };
+    const pointItems = items
+      .split(',')
+      .map((item: string) => Number(item.trim()))
+      .map((item_id: number) => {
+        return {
+          item_id,
+          point_id,
+        };
     });
   
     await trx('point_items').insert(pointItems);
