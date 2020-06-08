@@ -48,6 +48,11 @@
   border: 0;
 }
 
+#page-create-point fieldset .erro {
+  color: red;
+  font-family: Ubuntu;  
+}
+
 #page-create-point form legend {
   width: 100%;
   display: flex;

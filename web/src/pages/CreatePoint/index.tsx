@@ -12,6 +12,7 @@ import './styles.css';
 
 import logo from '../../assets/logo.svg';
 import { response } from 'express';
+import { isNumber } from 'util';
 
 interface Item {
   id: number;
@@ -58,6 +59,7 @@ const CreatePoint = () => {
   const [validacaoName, setValidacaoName] = useState(''); //validar nome input
   const [validacaoEmail, setValidacaoEmail] = useState(''); //validar email input
   const [validacaoWhatsapp, setValidacaoWhatsapp] = useState(''); //validar email input
+  const [validacaoItems, setValidacaoItems] = useState(''); //validar seleção de no min 1 item
 
   const history = useHistory();
 
@@ -155,6 +157,9 @@ const CreatePoint = () => {
         setValidacaoEmail('');
       }
 
+      //Validação whatsapp
+      //esta voltando string - terminar validação
+      
     const uf = selectedUf;
     const city = selectedCity;
     const [latitude, longitude] = selectedPosition;
@@ -169,6 +174,15 @@ const CreatePoint = () => {
     data.append('city', city);
     data.append('latitude', String(latitude));
     data.append('longitude', String(longitude));
+
+    //validando items, obrigatorio selecionar
+    if (items[0] == null) {
+      setValidacaoItems('Selecione no minimo 1 item a ser coletado')
+      return
+    } else {
+      setValidacaoItems('');
+    }
+
     data.append('items', items.join(','));
 
     if (selectedFile) { //tem q criar condição, pois selectedFile pode ser nulo/vazio
@@ -293,6 +307,7 @@ const CreatePoint = () => {
               </li>
               ))}
             </ul>
+            { validacaoItems && <div className="erro">{validacaoItems}</div> }
           </fieldset>
 
           <button type="submit">Cadastrar Ponto de Coleta</button>
