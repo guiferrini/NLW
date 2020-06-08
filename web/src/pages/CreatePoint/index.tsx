@@ -142,12 +142,19 @@ const CreatePoint = () => {
     
     
     const { name, email, whatsapp } = inputData;
+      //Validação nome min 3 caracteres
       if (name.length < 3) {
         setValidacaoName('O Nome deve conter no minimo 3 caracteres');
       } else {
         setValidacaoName('');
       }
-      
+      //Validação email
+      if (email.indexOf('@') == -1 || email.indexOf('.com') == -1) {
+        setValidacaoEmail('Email inválido, favor verificar');
+      } else {
+        setValidacaoEmail('');
+      }
+
     const uf = selectedUf;
     const city = selectedCity;
     const [latitude, longitude] = selectedPosition;
