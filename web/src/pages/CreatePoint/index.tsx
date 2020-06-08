@@ -60,6 +60,7 @@ const CreatePoint = () => {
   const [validacaoEmail, setValidacaoEmail] = useState(''); //validar email input
   const [validacaoWhatsapp, setValidacaoWhatsapp] = useState(''); //validar email input
   const [validacaoItems, setValidacaoItems] = useState(''); //validar seleção de no min 1 item
+  const [validacaoLatLon, setValidacaoLatLon] = useState(''); //validar longitude e latitude
 
   const history = useHistory();
 
@@ -172,6 +173,14 @@ const CreatePoint = () => {
     data.append('whatsapp', whatsapp);
     data.append('uf', uf);
     data.append('city', city);
+
+    //validando longitude e latidude dif de zero
+    if (latitude === 0 || longitude === 0) {
+      setValidacaoLatLon('Favor marcar o endereço no mapa')
+    } else {
+      setValidacaoLatLon('');
+    }
+
     data.append('latitude', String(latitude));
     data.append('longitude', String(longitude));
 
@@ -182,7 +191,6 @@ const CreatePoint = () => {
     } else {
       setValidacaoItems('');
     }
-
     data.append('items', items.join(','));
 
     if (selectedFile) { //tem q criar condição, pois selectedFile pode ser nulo/vazio
@@ -257,14 +265,15 @@ const CreatePoint = () => {
               <h2>Endereço</h2>
               <span>Selecione o endereço no mapa</span>
             </legend>
+            { validacaoLatLon && <div className="erro">{validacaoLatLon}</div> }
 
             <Map center={initialPosition} zoom={15} onClick={handleMapClick}> 
               <TileLayer 
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               />
-
               <Marker position={selectedPosition} />
+
             </Map>
 
             <div className="field-group">
