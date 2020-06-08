@@ -62,6 +62,7 @@ const CreatePoint = () => {
   const [validacaoItems, setValidacaoItems] = useState(''); //validar seleção de no min 1 item
   const [validacaoLatLon, setValidacaoLatLon] = useState(''); //validar longitude e latitude
   const [validacaoUf, setValidacaoUf] = useState(''); //validar se foi selecionado UF
+  const [validacaoCidade, setValidacaoCidade] = useState(''); //validar se cidade foi selecionada
 
   const history = useHistory();
 
@@ -161,18 +162,24 @@ const CreatePoint = () => {
 
       //Validação whatsapp
       //esta voltando string - terminar validação
+      console.log(whatsapp)
       
     const uf = selectedUf;
-
     //validação uf
     if (uf === '0') {
-      setValidacaoUf('Favor selecioana o Estado(UF)');
+      setValidacaoUf('Favor selecionar o Estado(UF)');
     } else {
       setValidacaoUf('');
     }
 
-
     const city = selectedCity;
+    //validação cidade
+    if (city === '0') {
+      setValidacaoCidade('Favor selecionar a Cidade')
+    } else {
+      setValidacaoCidade('');
+    }
+
     const [latitude, longitude] = selectedPosition;
 
     //validando longitude e latidude dif de zero
@@ -305,6 +312,7 @@ const CreatePoint = () => {
                     <option key={city} value={city}>{city}</option>
                   ))}
                 </select>
+                { validacaoCidade && <div className="erro">{validacaoCidade}</div> }
               </div>
             </div>
           </fieldset>
