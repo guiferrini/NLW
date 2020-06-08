@@ -13,6 +13,7 @@ import './styles.css';
 import logo from '../../assets/logo.svg';
 import { response } from 'express';
 import { isNumber } from 'util';
+import { type } from 'os';
 
 interface Item {
   id: number;
@@ -161,9 +162,15 @@ const CreatePoint = () => {
       }
 
       //Validação whatsapp
-      //esta voltando string - terminar validação
-      console.log(whatsapp)
-      
+      // const x = Number(whatsapp);
+      // console.log(typeof(x)); 
+      const letras = ['qwertyuiopasdfghjklçzxcvbnm,.-_()'];
+      if (whatsapp.indexOf('letras')) {
+        setValidacaoWhatsapp('Favor digitar apenas Números');
+      } else {
+        setValidacaoWhatsapp('');
+      }
+
     const uf = selectedUf;
     //validação uf
     if (uf === '0') {
@@ -181,7 +188,6 @@ const CreatePoint = () => {
     }
 
     const [latitude, longitude] = selectedPosition;
-
     //validando longitude e latidude dif de zero
     if (latitude === 0 || longitude === 0) {
       setValidacaoLatLon('Favor marcar o endereço no mapa')
@@ -190,7 +196,6 @@ const CreatePoint = () => {
     }
 
     const items = selectedItems;
-
     //validando items, obrigatorio selecionar
     if (items[0] == null) {
       setValidacaoItems('Selecione no minimo 1 item a ser coletado')
@@ -282,16 +287,16 @@ const CreatePoint = () => {
               <h2>Endereço</h2>
               <span>Selecione o endereço no mapa</span>
             </legend>
-            { validacaoLatLon && <div className="erro">{validacaoLatLon}</div> }
 
             <Map center={initialPosition} zoom={15} onClick={handleMapClick}> 
               <TileLayer 
                 attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
+                />
               <Marker position={selectedPosition} />
 
             </Map>
+            { validacaoLatLon && <div className="erro">{validacaoLatLon}</div> }
 
             <div className="field-group">
               <div className="field">
