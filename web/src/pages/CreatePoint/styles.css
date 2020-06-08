@@ -91,6 +91,11 @@
   color: #6C6C80;
 }
 
+#page-create-point form .field .erro {
+  color: red;
+  font-family: Ubuntu;
+}
+
 #page-create-point form .field select {
   -webkit-appearance: none;
   -moz-appearance: none;

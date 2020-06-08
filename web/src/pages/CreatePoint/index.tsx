@@ -55,6 +55,10 @@ const CreatePoint = () => {
   const [selectedCity, setSelectedCity] = useState('0'); //armazena a Cidade selecionada pelo usuario
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0,0]); //armezana longitude e latitude qdo cliente clica no mapa
     
+  const [validacaoName, setValidacaoName] = useState(''); //validar nome input
+  const [validacaoEmail, setValidacaoEmail] = useState(''); //validar email input
+  const [validacaoWhatsapp, setValidacaoWhatsapp] = useState(''); //validar email input
+
   const history = useHistory();
 
   //Qdo usuario iniciar app, informa localização atual dele
@@ -135,8 +139,15 @@ const CreatePoint = () => {
   //Envio do formulário p API
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-
+    
+    
     const { name, email, whatsapp } = inputData;
+      if (name.length < 3) {
+        setValidacaoName('O Nome deve conter no minimo 3 caracteres');
+      } else {
+        setValidacaoName('');
+      }
+      
     const uf = selectedUf;
     const city = selectedCity;
     const [latitude, longitude] = selectedPosition;
@@ -193,6 +204,7 @@ const CreatePoint = () => {
                 id="name"
                 onChange={handleInputChange}
               />
+              { validacaoName && <div className="erro">{validacaoName}</div> }
             </div>
             
             <div className="field-group">
@@ -204,6 +216,7 @@ const CreatePoint = () => {
                   id="email"
                   onChange={handleInputChange}
                 />
+                { validacaoEmail && <div className="erro">{validacaoEmail}</div> }
               </div>
               <div className="field">
                 <label htmlFor="whatsapp">Whatsapp</label>
@@ -213,6 +226,7 @@ const CreatePoint = () => {
                   id="whatsapp"
                   onChange={handleInputChange}
                 />
+                { validacaoWhatsapp && <div className="erro">{validacaoWhatsapp}</div> }
               </div>
             </div>
           </fieldset>
