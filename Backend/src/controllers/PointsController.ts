@@ -5,20 +5,37 @@ import knex from '../database/connection'; // Connection witd Database
 class PointsController {
   async index(request: Request, response: Response) {
     // Filtro(Query): Cidade, UF, items
-    const { city, uf, items } = request.query; //informar o formato qdo receber por query
+    const { city, uf} = request.query; //informar o formato qdo receber por query
 
-    const checkItems = String(items)
-      .split(',')
-      .map(item => Number(item.trim())) //trim: retirar espaços caso tenha
+    //inclui no filtro: items
+    // const checkItems = String(items)
+    //   .split(',')
+    //   .map(item => Number(item.trim())) //trim: retirar espaços caso tenha
 
     //Bsca tds os ptos, em q pelo - 1 (whereIn) item q esta dentro do q estou recebendo (checkItems) 
     const points = await knex('points')
+      //.join('point_items', 'points.id', '=', 'point_items.point_id')
       .join('point_items', 'points.id', '=', 'point_items.point_id')
-      .whereIn('point_items.item_id', checkItems)
+      //.whereIn('point_items.item_id', checkItems)
+      //.where('item_id')
       .where('city', String(city))
       .where('uf', String(uf))
-      .distinct() //caso um pto tenha masi d 1 item do filtro, retorna o pto 1 vez só
-      .select('points.*'); // quero buscar os dados da tabela points e não da tabela join
+      //.distinct('point_id') //caso um pto tenha masi d 1 item do filtro, retorna o pto 1 vez só
+      //.select('points.*'); // quero buscar os dados da tabela points e não da tabela join
+      //.orderBy('points.id')
+      //.groupBy('point_items.id')
+      //.select('points.id', 'item_id');
+      .select('points.id', 'point_items.item_id');
+
+      //A info volta com ID e Item, porem n tds items no msm ID
+      // {
+      //   "id": 12,
+      //   "item_id": 1
+      // },
+      // {
+      //   "id": 12,
+      //   "item_id": 6
+      // },
 
       const serializedPoints = points.map(point => {
         return {
@@ -27,7 +44,7 @@ class PointsController {
         };
       });
 
-    return response.json(serializedPoints);
+    return response.json(points);
   }
 
   async show(request: Request, response: Response) {

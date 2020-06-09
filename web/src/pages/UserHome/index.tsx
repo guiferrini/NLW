@@ -8,6 +8,7 @@ import './styles.css';
 import logo from '../../assets/logo.svg';
 
 import api from '../../services/api';
+import { response } from 'express';
 
 interface UF {
   sigla: string;
@@ -26,10 +27,11 @@ const User = () => {
 
   const [cities, setCities] = useState<string[]>([]);
   const [selectedCity, setSelectedCity] = useState('0');
+  
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     const uf = event.target.value;
-
+    
     setSelectedUf(uf);
   }
 
@@ -68,33 +70,29 @@ const User = () => {
   
   // const [ponto, setponto] = useState('');
 
-  // const [inputData, setInputData] = useState({ //armazena os dados de tds Inputs
-  //   uf: '',
-  //   city: '',
-  // });
-
-  // useEffect(() => {
-  //   api.get('/points').then(response => {
-  //     const inputData = response.data.uf;
-  //     console.log('inputData');
-
-  //     setponto(response.data)
-  //     console.log(response.data);
-  //   })
-  // }, []); 
-
-  // //Armazenamento de Input - área: Dados
-  // function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-  //   const { name, value } = event.target;
-
-  //   setInputData({ ...inputData, [name]: value }); //'name' é generico p tds, tds tem 'name', value é o nome, email e whatsapp
-  // } 
-
+  
+  
   function handleSubmit() { //async function handleSubmit() {
     //e.preventDefault();
-    
+    console.log(selectedUf, selectedCity);
+    const uf = selectedUf;
+    const city = selectedCity;
+
+    api.get(`points?uf=${uf}&city=${city}`).then(response => {
+      console.log(response.data);
+    })
+
+   
     try {
-      //api.get('points'); //await api.get('points');
+      // useEffect(() => {
+      //   await api.get('/points').then(response => {
+      //     const inputData = response.data.uf;
+      //     console.log('inputData');
+    
+      //     setponto(response.data)
+      //     console.log(response.data);
+      //   })
+      // }, []); 
       
       history.push('/user-search'); //caminho pontos com filtro
       return

@@ -161,12 +161,12 @@ const CreatePoint = () => {
       //Validação whatsapp
       // const x = Number(whatsapp);
       // console.log(typeof(x)); 
-      const letras = ['qwertyuiopasdfghjklçzxcvbnm,.-_()'];
-      if (whatsapp.indexOf('letras')) {
-        setValidacaoWhatsapp('Favor digitar apenas Números');
-      } else {
-        setValidacaoWhatsapp('');
-      }
+      // const letras = ['qwertyuiopasdfghjklçzxcvbnm,.-_()'];
+      // if (whatsapp.indexOf('letras')) {
+      //   setValidacaoWhatsapp('Favor digitar apenas Números');
+      // } else {
+      //   setValidacaoWhatsapp('');
+      // }
 
     const uf = selectedUf;
     //validação uf
