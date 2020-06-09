@@ -23,6 +23,12 @@ const Home = () => {
             </span>
             <strong>Cadastre um ponto de coleta</strong>
           </Link>
+          <Link to="/user-home">
+            <span>
+              <FiLogIn />
+            </span>
+            <strong>Busque um ponto de coleta</strong>
+          </Link>
         </main>
       </div>
     </div>

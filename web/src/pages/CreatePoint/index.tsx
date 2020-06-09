@@ -11,9 +11,6 @@ import Dropzone from '../../components/Dropzone/index';
 import './styles.css';
 
 import logo from '../../assets/logo.svg';
-import { response } from 'express';
-import { isNumber } from 'util';
-import { type } from 'os';
 
 interface Item {
   id: number;

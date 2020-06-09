@@ -21,17 +21,21 @@ const Dropzone: React.FC<Props> = ({ onFileUploaded }) => {
     onFileUploaded(file);
   }, [onFileUploaded])
 
-  const {getRootProps, getInputProps, isDragActive} = useDropzone({
+  const {isDragAccept, isDragReject, getRootProps, getInputProps, isDragActive} = useDropzone({
     onDrop,
     accept: 'image/*'
-  })
-
+  });
+  
   return (
     <div className="dropzone" {...getRootProps()}>
       <input {...getInputProps()} accept='image/*' />
 
+      {/* {isDragAccept && (<p>All files will be accepted</p>)}
+      {isDragReject && (<p>Some files will be rejected</p>)}
+      {!isDragActive && (<p>Drop some files here ...</p>)} */}
+
       { selectedFileUrl
-        ? <img src={selectedFileUrl} alt="Point image" />
+        ? <img src={selectedFileUrl} alt="Point image" /> 
         : (
           <p>
             <FiUpload />
