@@ -2,7 +2,7 @@ import React, { useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import axios from 'axios';
+import axios from 'axios'; //conecta API p UF e Cidade
 import { LeafletMouseEvent } from 'leaflet';
 import api from '../../services/api';
 

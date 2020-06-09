@@ -16,7 +16,7 @@ const itemsController = new ItemsController(); // instanciando a claa
 routes.get('/items', itemsController.index); 
 
 //routes.post('/points', td q esta em pointsController.ts);
-routes.get('/points', pointsController.index);
+routes.get('/points', pointsController.index); //busca filtrada por: uf, city, items
 routes.get('/points/:id', pointsController.show);
 
 routes.post(
