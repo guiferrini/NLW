@@ -1,23 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import './styles.css';
 
 import logo from '../../assets/logo.svg';
 
-// function handleSelectItem(id: number) {
-//   async function handleSubmit(event: FormEvent) {  
-
-//     await api.post('points', data);
-    
-//     alert('Ponto de coleta Criado!');
-
-//     history.push('/');
-//   }
+import api from '../../services/api';
 
 
 const User = () => {
+  const history = useHistory();
+  const [id, setId] = useState('');
+
+  function handleSubmit() { //async function handleSubmit() {
+    //e.preventDefault();
+    
+    try {
+      api.get('points'); //await api.get('points');
+      
+      history.push('/user-search'); //caminho pontos com filtro
+      return
+    } catch (err) {
+      alert('falha');
+    }
+  };
+
   return (
     <div id="page-user">
         <header>
@@ -29,7 +37,7 @@ const User = () => {
           </Link>
         </header>
 
-        <main >
+        <form onSubmit={handleSubmit}>
           <h1>Seu marketplace de coleta de resíduos.</h1>
           <p>Ajudamos pessoas a encontrarem pontos de coleta de forma eficiente.</p>
 
@@ -49,7 +57,7 @@ const User = () => {
           </div>
 
           <button type="submit">Buscar Ponto de Coleta</button>
-        </main>
+        </form>
     </div>
   )
 };

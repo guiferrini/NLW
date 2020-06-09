@@ -14,7 +14,7 @@
   align-items: center;
 }
 
-#page-user main {
+#page-user form {
   flex: 1;
   max-width: 560px;
 
@@ -31,13 +31,13 @@
 
 }
 
-#page-user main h1 {
+#page-user form h1 {
   font-size: 54px;
   color: var(--title-color);
   text-align: center;
 }
 
-#page-user main p {
+#page-user form p {
   font-size: 24px;
   margin-top: 24px;
   line-height: 38px;
@@ -46,12 +46,12 @@
 
 }
 
-#page-user main .field {
+#page-user form .field {
   margin-top: 10px;
   text-align: center;
 }
 
-#page-user button {
+#page-user form button {
   width: 260px;
   height: 56px;
   background: var(--primary-color);
@@ -66,7 +66,7 @@
   cursor: pointer;
 }
 
-#page-user button:hover {
+#page-user form button:hover {
   background: #2FB86E;
 }
 
