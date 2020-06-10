@@ -1,4 +1,5 @@
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { Request, Response, response } from 'express';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import axios from 'axios';
@@ -8,7 +9,8 @@ import './styles.css';
 import logo from '../../assets/logo.svg';
 
 import api from '../../services/api';
-import { response } from 'express';
+import { point } from 'leaflet';
+import { stringify } from 'querystring';
 
 interface UF {
   sigla: string;
@@ -72,29 +74,48 @@ const User = () => {
 
   
   
-  function handleSubmit() { //async function handleSubmit() {
-    //e.preventDefault();
+  async function handleSubmit(event: FormEvent<HTMLFormElement>
+    ): Promise<void> {
+      event.preventDefault();
     console.log(selectedUf, selectedCity);
     const uf = selectedUf;
     const city = selectedCity;
-
-    api.get(`points?uf=${uf}&city=${city}`).then(response => {
-      console.log(response.data);
-    })
-
-   
-    try {
-      // useEffect(() => {
-      //   await api.get('/points').then(response => {
-      //     const inputData = response.data.uf;
-      //     console.log('inputData');
     
-      //     setponto(response.data)
-      //     console.log(response.data);
-      //   })
-      // }, []); 
+
+    try {
+      const id = 22;
+      const points = api.get(`/points/${id}`).then(response => {
+        const inputData = response.data.uf;
+        console.log(inputData);
+  
+        //setponto(response.data)
+        console.log(response.data);
+      })
+
+
+      const ola = api.get(`/points?uf=${uf}&items=1,%202,%203,%204,%205,%206&city=${city}
+        `).then(response => {
+          const inputData = response.data;
+          console.log(inputData);
+    
+          //setponto(response.data)
+          console.log(response.data);
+        })
+  
+
+      //const ola = await api.get('/points/22'); retorna! 
+      // const ola = await api.get(
+      //   `/points?uf=${uf}&items=1,%202,%203,%204,%205,%206&city=${city}
+      // `).then(response => {
+      //   const check = response.data.id
+      // }
+      // //const check = ola.data.map(point => point.toString())
       
-      history.push('/user-search'); //caminho pontos com filtro
+      // console.log(ola);
+
+      
+      
+      //history.push('/user-search'); //caminho pontos com filtro
       return
     } catch (err) {
       alert('falha');
