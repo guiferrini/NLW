@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Request, Response, response } from 'express';
 import { Link, useHistory } from 'react-router-dom';
-import { FiArrowLeft } from 'react-icons/fi';
+import { FiArrowLeft, FiFilter } from 'react-icons/fi';
 import axios from 'axios';
 
 import './styles.css';
@@ -36,7 +36,9 @@ const User = () => {
   const [cities, setCities] = useState<string[]>([]);
   const [selectedCity, setSelectedCity] = useState('0');
   const [filtro, setFiltro] = useState<Filtro[]>([]);
-
+  
+  const [check, setCheck] = useState('');
+  let x ='';
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     const uf = event.target.value;
@@ -95,12 +97,7 @@ const User = () => {
             const inputData = ola.data;
             console.log(inputData);
             setFiltro(inputData);
-
-            //const x = filtro.map()
-      
-            //setponto(response.data)
-            // console.log(response.data);
-  
+             
     } catch (err) {
       alert('falha')
     }
@@ -145,12 +142,23 @@ const User = () => {
         </form>
 
         <output>
-          {filtro.map(filtro => 
-            <h1 key={filtro.id}>
+          {filtro.map((filtro) => (
+            <div key={filtro.id}>
+              <h1>{filtro.id}</h1>
               <h2>{filtro.name}</h2>
+              <h3>{filtro.email}</h3>
+              {/* {x = filtro.email}
+              {filtro.name === x ? <h2>lala</h2> : <h3>lele</h3>}
+              {/* {if({filtro.name} === x) {filtro.id}} */}
+               
+            </div>
+          ))}
+          {/* {filtro.map(filtro => 
+            <h1 key={filtro.id}>
+              <h2>{if(filtro.id == 10){filtro.name}}</h2>
               <h2>{filtro.email}</h2>
             </h1>
-          )};
+          )}; */}
         </output>
     </div>
   )
