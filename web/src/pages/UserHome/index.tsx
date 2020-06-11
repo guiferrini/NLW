@@ -1,7 +1,9 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { Request, Response, response } from 'express';
 import { Link, useHistory } from 'react-router-dom';
-import { FiArrowLeft, FiFilter } from 'react-icons/fi';
+import { FiArrowLeft, FiFilter, FiYoutube } from 'react-icons/fi';
+import { Map, TileLayer, Marker } from 'react-leaflet';
+import { LeafletMouseEvent } from 'leaflet';
 import axios from 'axios';
 
 import './styles.css';
@@ -25,6 +27,8 @@ interface Filtro {
   name: string;
   email: string;
   id: number;
+  latitude: number,
+  longitude: number,
 }
 
 const User = () => {
@@ -35,10 +39,10 @@ const User = () => {
 
   const [cities, setCities] = useState<string[]>([]);
   const [selectedCity, setSelectedCity] = useState('0');
-  const [filtro, setFiltro] = useState<Filtro[]>([]);
-  
+
+  const [filtro, setFiltro] = useState<Filtro[]>([]);  
   const [check, setCheck] = useState('');
-  let x ='';
+  const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0,0]);
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     const uf = event.target.value;
@@ -97,7 +101,7 @@ const User = () => {
             const inputData = ola.data;
             console.log(inputData);
             setFiltro(inputData);
-             
+            
     } catch (err) {
       alert('falha')
     }
@@ -137,16 +141,26 @@ const User = () => {
               ))}
             </select>
           </div>
-
+          
           <button type="submit">Buscar Ponto de Coleta</button>
         </form>
+        
 
         <output>
+          <Map center={[-23.06638672183509,-46.941618919372566]} zoom={13}>
+            <TileLayer
+              attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={selectedPosition} />
+          </Map>
+
           {filtro.map((filtro) => (
             <div key={filtro.id}>
               <h1>{filtro.id}</h1>
               <h2>{filtro.name}</h2>
               <h3>{filtro.email}</h3>
+              <h3>{filtro.latitude}</h3>
               {/* {x = filtro.email}
               {filtro.name === x ? <h2>lala</h2> : <h3>lele</h3>}
               {/* {if({filtro.name} === x) {filtro.id}} */}
@@ -155,10 +169,11 @@ const User = () => {
           ))}
           {/* {filtro.map(filtro => 
             <h1 key={filtro.id}>
-              <h2>{if(filtro.id == 10){filtro.name}}</h2>
-              <h2>{filtro.email}</h2>
+            <h2>{if(filtro.id == 10){filtro.name}}</h2>
+            <h2>{filtro.email}</h2>
             </h1>
           )}; */}
+          
         </output>
     </div>
   )
