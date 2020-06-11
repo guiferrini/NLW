@@ -21,6 +21,12 @@ interface City {
   nome: string;
 }
 
+interface Filtro {
+  name: string;
+  email: string;
+  id: number;
+}
+
 const User = () => {
   const history = useHistory();
   
@@ -29,7 +35,8 @@ const User = () => {
 
   const [cities, setCities] = useState<string[]>([]);
   const [selectedCity, setSelectedCity] = useState('0');
-  
+  const [filtro, setFiltro] = useState<Filtro[]>([]);
+
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     const uf = event.target.value;
@@ -80,45 +87,22 @@ const User = () => {
     console.log(selectedUf, selectedCity);
     const uf = selectedUf;
     const city = selectedCity;
-    
 
     try {
-      const id = 22;
-      const points = api.get(`/points/${id}`).then(response => {
-        const inputData = response.data.uf;
-        console.log(inputData);
+      
+        const ola = await api.get(`/points?uf=${uf}&items=1,%202,%203,%204,%205,%206&city=${city}`)
+        //.then(response => {
+            const inputData = ola.data;
+            console.log(inputData);
+            setFiltro(inputData);
+
+            //const x = filtro.map()
+      
+            //setponto(response.data)
+            // console.log(response.data);
   
-        //setponto(response.data)
-        console.log(response.data);
-      })
-
-
-      const ola = api.get(`/points?uf=${uf}&items=1,%202,%203,%204,%205,%206&city=${city}
-        `).then(response => {
-          const inputData = response.data;
-          console.log(inputData);
-    
-          //setponto(response.data)
-          console.log(response.data);
-        })
-  
-
-      //const ola = await api.get('/points/22'); retorna! 
-      // const ola = await api.get(
-      //   `/points?uf=${uf}&items=1,%202,%203,%204,%205,%206&city=${city}
-      // `).then(response => {
-      //   const check = response.data.id
-      // }
-      // //const check = ola.data.map(point => point.toString())
-      
-      // console.log(ola);
-
-      
-      
-      //history.push('/user-search'); //caminho pontos com filtro
-      return
     } catch (err) {
-      alert('falha');
+      alert('falha')
     }
   };
 
@@ -159,6 +143,15 @@ const User = () => {
 
           <button type="submit">Buscar Ponto de Coleta</button>
         </form>
+
+        <output>
+          {filtro.map(filtro => 
+            <h1 key={filtro.id}>
+              <h2>{filtro.name}</h2>
+              <h2>{filtro.email}</h2>
+            </h1>
+          )};
+        </output>
     </div>
   )
 };
