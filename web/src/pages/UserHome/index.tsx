@@ -13,6 +13,7 @@ import logo from '../../assets/logo.svg';
 import api from '../../services/api';
 import { point } from 'leaflet';
 import { stringify } from 'querystring';
+import { number } from '@hapi/joi';
 
 interface UF {
   sigla: string;
@@ -31,6 +32,10 @@ interface Filtro {
   longitude: number,
 }
 
+interface PropsId {
+  id: number;
+}
+
 const User = () => {
   const history = useHistory();
   
@@ -40,9 +45,12 @@ const User = () => {
   const [cities, setCities] = useState<string[]>([]);
   const [selectedCity, setSelectedCity] = useState('0');
 
-  const [filtro, setFiltro] = useState<Filtro[]>([]);  
+  const [filtro, setFiltro] = useState<Filtro[]>([]);
+  const [id, setId] = useState<PropsId[]>([]);  
   const [check, setCheck] = useState('');
   const [selectedPosition, setSelectedPosition] = useState<[number, number]>([0,0]);
+
+  
 
   function handleSelectUf(event: ChangeEvent<HTMLSelectElement>) {
     const uf = event.target.value;
@@ -95,13 +103,36 @@ const User = () => {
     const city = selectedCity;
 
     try {
+      const ola = await api.get(`/points?uf=${uf}&items=1,%202,%203,%204,%205,%206&city=${city}`)
+      //.then(response => {
+      const inputData = ola.data;
+      console.log(inputData);
+      setFiltro(inputData);
+
+      let y = 0;
+      let z = inputData.length;
+      //console.log(`esse é o Z=${z}`)
+      const check = inputData.map((filter: any) => filter.id); //tras tds ids
+      //console.log(`esse é o check ${check}`);
+
+      const b = [];
+      for (var i = 0; i < check.length; i++) {
+          b[check[i]] = check[i];
+      }
+        const pointId = [];
+        for (var key in b) {
+            pointId.push(key);
+            //console.log(pointId)
+        }
+
+      for (var i = 0; i < pointId.length; i++) {
       
-        const ola = await api.get(`/points?uf=${uf}&items=1,%202,%203,%204,%205,%206&city=${city}`)
-        //.then(response => {
-            const inputData = ola.data;
-            console.log(inputData);
-            setFiltro(inputData);
-            
+        const dadosId = await api.get(`/points/${pointId[i]}`)
+        console.log(dadosId)
+      } 
+        console.log(pointId)
+        
+        
     } catch (err) {
       alert('falha')
     }
@@ -152,28 +183,12 @@ const User = () => {
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+           
             <Marker position={selectedPosition} />
           </Map>
 
-          {filtro.map((filtro) => (
-            <div key={filtro.id}>
-              <h1>{filtro.id}</h1>
-              <h2>{filtro.name}</h2>
-              <h3>{filtro.email}</h3>
-              <h3>{filtro.latitude}</h3>
-              {/* {x = filtro.email}
-              {filtro.name === x ? <h2>lala</h2> : <h3>lele</h3>}
-              {/* {if({filtro.name} === x) {filtro.id}} */}
-               
-            </div>
-          ))}
-          {/* {filtro.map(filtro => 
-            <h1 key={filtro.id}>
-            <h2>{if(filtro.id == 10){filtro.name}}</h2>
-            <h2>{filtro.email}</h2>
-            </h1>
-          )}; */}
-          
+          <h1>{filtro.map((filtro) => (filtro.id))}</h1>
+           
         </output>
     </div>
   )
