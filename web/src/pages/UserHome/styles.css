@@ -89,3 +89,19 @@
   color: #6C6C80;
   margin-left: 10px;
 }
+
+#page-user output ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+}
+
+#page-user output ul li {
+  margin-bottom: 20px; 
+}
+
+#page-user output ul li img{
+  width: 200px;
+  height: 200px;
+} 

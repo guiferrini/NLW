@@ -13,7 +13,7 @@ import logo from '../../assets/logo.svg';
 import api from '../../services/api';
 import { point } from 'leaflet';
 import { stringify } from 'querystring';
-import { number } from '@hapi/joi';
+import { number, string } from '@hapi/joi';
 
 interface UF {
   sigla: string;
@@ -36,6 +36,7 @@ interface Filtro {
   uf: string,
   image_url: string,
   items: string,
+  Array: string,
 }
 
 interface Filtro2 {
@@ -50,6 +51,8 @@ interface Filtro2 {
     uf: string,
     image_url: string
     title: string,
+    items: string,
+    Array: string,
 }
 
 interface PropsId {
@@ -257,12 +260,28 @@ const User = () => {
             <Marker position={selectedPosition} />
           </Map> */}
 
-          <h1>Output</h1>
-
-          <h1>{filtro.map((filtro) => (filtro.id))}</h1>
-
-          <h1>{pointInfos.map(busca => (busca.id))}</h1>
-          <h1>{pointInfos.map(busca => (busca.name))}</h1>  
+          <h1>Resultado</h1>
+          <ul>
+            {/* {pointInfos} */}
+            {pointInfos.map(busca => (
+              <li key={busca.id}>
+                <strong>Nome do Ponto: {busca.name}</strong>
+                <h1><img src={busca.image_url} alt="foto do ponto"/></h1>
+                <h1>Contato: </h1>
+                <h2>Whatsapp: {busca.whatsapp}</h2>
+                <h2>Email: {busca.email}</h2>
+                
+                
+                {/* <strong>{busca$1.Array}</strong> */}
+                {/* {pointInfos.map(busca$2 => busca$2,id)} */}
+                {/* <h2>{busca.email}</h2>
+                <h2>{busca.whatsapp}</h2>
+                <img src={busca.image_url} alt=""/>
+                <img src={busca.title} alt=""/>
+                <h2>{busca.items}</h2> */}
+              </li>
+            ))}
+          </ul>
                   
         </output>
     </div>
