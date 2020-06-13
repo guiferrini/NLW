@@ -176,7 +176,7 @@ const User = () => {
         
         console.log(`foi ${foi}`) // [object object]
         // setPointsInfos(Object.values(dadosId.data)); //funciona, com o ultimo do Array :)
-        setPointsInfos(Object.values(dadosId.data)); //funciona, com o ultimo do Array :)
+        setPointsInfos((verdao) => verdao.concat(Object.values(dadosId.data)) ); //funciona com Array inteiro hehe
         console.log(Object.values(foi)) //volta [{} {}]
         console.log(setPointsInfos) //quebra
         console.log(pointInfos) //vazio
