@@ -3,7 +3,7 @@ import { Request, Response, response } from 'express';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft, FiFilter, FiYoutube } from 'react-icons/fi';
 import { Map, TileLayer, Marker } from 'react-leaflet';
-import { LeafletMouseEvent } from 'leaflet';
+import { LeafletMouseEvent, divIcon } from 'leaflet';
 import axios, { AxiosResponse } from 'axios';
 
 import './styles.css';
@@ -39,17 +39,17 @@ interface Filtro {
 }
 
 interface Filtro2 {
-  name: string;
-  email: string;
-  id: number;
-  latitude: number,
-  longitude: number,
-  image: string,
-  whatsapp: number,
-  city: string,
-  uf: string,
-  image_url: string,
-  items: string,
+    id: number,
+    image: string,
+    name: string,
+    email: string,
+    whatsapp: string,
+    latitude: number,
+    longitude: number,
+    city: string,
+    uf: string,
+    image_url: string
+    title: string,
 }
 
 interface PropsId {
@@ -114,7 +114,6 @@ const User = () => {
   // const [ponto, setponto] = useState('');
 
   
-  
   async function handleSubmit(event: FormEvent<HTMLFormElement>
     ): Promise<void> {
       event.preventDefault();
@@ -122,21 +121,31 @@ const User = () => {
     const uf = selectedUf;
     const city = selectedCity;
 
-    //busca Point por UF e City
+    //busca Point por UF e City 
     try {
+
       const ola = await api.get(`/points?uf=${uf}&items=1,%202,%203,%204,%205,%206&city=${city}`)
       //.then(response => {
       const inputData = ola.data;
       //console.log(`Filtro UF e CITY - ${inputData}`);
-      console.log(inputData);
-      setFiltro(inputData);
 
-      //busca Point por ID (com tds infos), dentro do UF e City
-      let y = 0;
-      let z = inputData.length;
-      //console.log(`esse é o Z=${z}`)
+      console.log(`1° get ${inputData}`);
+      console.log(typeof(inputData)); //respo: object
+
+    //   type MyKnownType = {
+    //     infos: string;
+    //     photo: object;
+    //     outro: unknown[],
+    // };
+
+    //   const data: MyKnownType = await Array.from(inputData);
+    //     console.log(`data - ${data}`); //[object object]
+    //     console.log(typeof(data)) //object
+      setFiltro(inputData);
+ 
+      // //busca Point por ID (com tds infos), dentro do UF e City
       const check = inputData.map((filter: any) => {return (filter.id)}); //tras tds ids
-      //console.log(`esse é o check ${check}`);
+      // //console.log(`esse é o check ${check}`);
 
       const b = [];
       for (var i = 0; i < check.length; i++) {
@@ -147,30 +156,53 @@ const User = () => {
         for (var key in b) {
             pointId.push(key);
           }
-          console.log(pointId)
+          console.log(`Array com IDs ${pointId}`)
+          console.log(typeof(pointId)) //object
 
-      for (var i = 0; i < pointId.length; i++) {
+          // let homeArray = new Array(homes.length);
+          // let i = 0
+          // for (var key in homes) {
+          //     homeArray[i] =  homes[key];
+          //     i = i + 1;
+          // }
+
+      for (var i = 0; i < pointId.length; i++) {  
+    
         const dadosId = await api.get(`/points/${pointId[i]}`)
         //console.log(`BUsca Point por ID - ${dadosId}`)
-        console.log(dadosId)
-        const [foi] = [dadosId.data]
-        console.log(`foi ${foi}`)
-        //setPointsInfos(dadosId.data);
+        console.log(`2° get ${dadosId}`) //1 objeto com: 1 array e 1 objeto
+        console.log(dadosId.data.point.id) //retorna 2 objetos
+        const foi = Object.values(dadosId.data) // com esse funciona       
         
-        const data = Array.from(dadosId.data);
-        // console.log(`${data}`);
+        console.log(`foi ${foi}`) // [object object]
+        // setPointsInfos(Object.values(dadosId.data)); //funciona, com o ultimo do Array :)
+        setPointsInfos(Object.values(dadosId.data)); //funciona, com o ultimo do Array :)
+        console.log(Object.values(foi)) //volta [{} {}]
+        console.log(setPointsInfos) //quebra
+        console.log(pointInfos) //vazio
 
-        //PAREI AQUI, DATA ESTA VOLTANDO VAZIO! DATA N TEM TIPAGEM, VERIFICAR...
+      // useEffect(() => {
+      //   for (var i = 0; i < pointId.length; i++) {  
+      //     const dadosId = await api.get(`/points/${pointId[i]}`)
+      // }, [])
+        
+        
+      //   const data = Array.from(foi);
+      //   console.log(`data - ${data}`);
+      //   //setPointsInfos(data); 
 
-        // type data = {
-        //   string;
-        // }
-        // setPointsInfos(data);
+
+      //   //PAREI AQUI, DATA ESTA VOLTANDO VAZIO! DATA N TEM TIPAGEM, VERIFICAR...
+
+      //   // type data = {
+      //   //   string;
+      //   // }
+      //   // setPointsInfos(data);
       
-      } 
-        //console.log(pointId)
-        
-        
+      //   //console.log(pointId)
+       
+    } 
+    
     } catch (err) {
       alert('falha')
     }
@@ -216,18 +248,22 @@ const User = () => {
         
 
         <output>
-          <Map center={[-23.06638672183509,-46.941618919372566]} zoom={13}>
+          {/* <Map center={[-23.06638672183509,-46.941618919372566]} zoom={13}>
             <TileLayer
               attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
            
             <Marker position={selectedPosition} />
-          </Map>
+          </Map> */}
+
+          <h1>Output</h1>
 
           <h1>{filtro.map((filtro) => (filtro.id))}</h1>
 
-          <h2>{ pointInfos.map((busca) => (busca.email)) }</h2>          
+          <h1>{pointInfos.map(busca => (busca.id))}</h1>
+          <h1>{pointInfos.map(busca => (busca.name))}</h1>  
+                  
         </output>
     </div>
   )

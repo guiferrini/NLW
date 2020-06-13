@@ -1,0 +1,94 @@
+// try {
+//       interface ufCity {
+//         id: number,
+//         image: string,
+//         name: string,
+//         email: string,
+//         whatsapp: string,
+//         latitude: number,
+//         longitude: number,
+//         city: string,
+//         uf: string,
+//         item_id: number,
+//         image_url: string 
+//       }
+
+//       interface ponto {
+//           id: number,
+//           image: string,
+//           name: string,
+//           email: string,
+//           whatsapp: string,
+//           latitude: number,
+//           longitude: number,
+//           city: string,
+//           uf: string,
+//           image_url: string
+//           title: string,
+//       }
+
+//       const ola = await api.get(`/points?uf=${uf}&items=1,%202,%203,%204,%205,%206&city=${city}`)
+//       //.then(response => {
+//       const inputData = ola.data;
+//       //console.log(`Filtro UF e CITY - ${inputData}`);
+
+//       // var convertida = inputData.map(function(obj) {
+//       //   return Object.keys(obj).map(function(chave) {
+//       //       return obj[chave];
+//       //   });
+//       // });
+
+//       console.log(inputData);
+//       console.log(typeof(inputData)); //respo: object
+//       //setFiltro(inputData);
+
+//       //busca Point por ID (com tds infos), dentro do UF e City
+//       let y = 0;
+//       let z = inputData.length;
+//       //console.log(`esse é o Z=${z}`)
+//       const check = inputData.map((filter: any) => {return (filter.id)}); //tras tds ids
+//       //console.log(`esse é o check ${check}`);
+
+//       const b = [];
+//       for (var i = 0; i < check.length; i++) {
+//           b[check[i]] = check[i];
+//           //console.log(b)
+//       }
+//         const pointId = [];
+//         for (var key in b) {
+//             pointId.push(key);
+//           }
+//           console.log(pointId)
+
+//       for (var i = 0; i < pointId.length; i++) {
+//       //   type dadosIde = {
+//       //     points: {};
+//       //     items: [];
+//       // };
+//         const dadosId: AxiosResponse<ponto[]> = await api.get(`/points/${pointId[i]}`)
+//         //console.log(`BUsca Point por ID - ${dadosId}`)
+//         console.log(dadosId)
+//         const foi = [dadosId.data]
+//         console.log(`foi ${foi}`)
+//         setPointsInfos(dadosId.data);
+        
+        
+//         const data = Array.from(foi);
+//         console.log(`data - ${data}`);
+//         //setPointsInfos(data); 
+
+
+//         //PAREI AQUI, DATA ESTA VOLTANDO VAZIO! DATA N TEM TIPAGEM, VERIFICAR...
+
+//         // type data = {
+//         //   string;
+//         // }
+//         // setPointsInfos(data);
+      
+//       } 
+//         //console.log(pointId)
+        
+        
+//     } catch (err) {
+//       alert('falha')
+//     }
