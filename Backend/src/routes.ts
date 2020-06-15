@@ -19,6 +19,7 @@ routes.get('/items', itemsController.index);
 routes.get('/points', pointsController.index); //busca filtrada por: uf, city, items
 routes.get('/points/:id', pointsController.show);
 routes.delete('/points/:id', pointsController.delete);
+routes.put('/points/:id', pointsController.update);
 
 routes.post(
   '/points', 

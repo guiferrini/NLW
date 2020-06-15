@@ -109,7 +109,7 @@ const User = () => {
     .then(response => {
       const cityName = response.data.map(city => city.nome);
 
-      setCities(cityName);
+      setCities(cityName); 
     });
 
   }, [selectedUf]);

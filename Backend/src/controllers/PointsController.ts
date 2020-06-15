@@ -1,17 +1,32 @@
 //O ts n sabe o formato de resquest e response entao informo o formato manualmente
-import { Request, Response } from 'express'
+import { Request, Response, request } from 'express'
 import knex from '../database/connection'; // Connection witd Database
+import { string } from '@hapi/joi';
 
 class PointsController {
+  async update(request: Request, response: Response) {
+    const { id } = request.params;
+    
+    const { email, whatsapp } = request.body;
+
+    knex('points')
+      .where({id}) 
+      // .select('id')
+      .update({ email, whatsapp })
+      .then(u => response.status(!!u?200:404).json({success:!!u}))
+      .catch(e => response.status(500).json(e));
+      
+  }
+
   async delete(request: Request, response: Response) {
     const { id } = request.params;
-    const PointId = request.headers.authorization;
+    // const point_id = request.headers.authorization;
 
-    const Point = await knex('points')
-        .where('id', id)
-        // .select('*')
-        .first(); //me retorna apenas 1 resultado
-    // if (Point.id !== PointId) {
+    // const points = await knex('points')
+    //     .where('id', id)
+    //     .select('point_id')
+    //     .first(); //me retorna apenas 1 resultado
+    // if (points.point_id !== point_id) {
     //     return response.status(401).json({ error: 'ID não localizado, favor verificar.'});
     // }    
     

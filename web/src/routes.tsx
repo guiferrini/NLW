@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import CreatePoint from './pages/CreatePoint';
 import UserHome from './pages/UserHome';
 import UserSearch from './pages/UserPoint';
+
  
 const Routes = () => {
   return (
