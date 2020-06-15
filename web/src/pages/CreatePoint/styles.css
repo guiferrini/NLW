@@ -172,7 +172,7 @@
 }
 
 #page-create-point form button:hover {
-  background: #2FB86E;
+  background: #3da86fe0;
 }
 
 .items-grid {
@@ -210,5 +210,5 @@
 
 .items-grid li.selected {
   background: #E1FAEC;
-  border: 2px solid #34CB79;
+  border: 2px solid #3da86fe0;
 }

@@ -1,7 +1,11 @@
 #page-home {
   height: 100vh;
 
-  background: url('../../assets/home-background.svg') no-repeat 500px bottom;
+  background: url('../../assets/logo.svg') no-repeat 80% 58%;
+  /* background-repeat: no-repeat;
+  background-size: 30%;
+  background-position: 80% 50%; */
+  /* background: url('../../assets/home-background.svg') no-repeat 500px bottom; */
 }
 
 #page-home .content {
@@ -80,7 +84,7 @@
 }
 
 #page-home .content main a:hover {
-  background: #2FB86E;
+  background: #3da86fe0;
 }
 
 @media(max-width: 900px) {
