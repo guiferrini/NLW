@@ -3,6 +3,22 @@ import { Request, Response } from 'express'
 import knex from '../database/connection'; // Connection witd Database
 
 class PointsController {
+  async delete(request: Request, response: Response) {
+    const { id } = request.params;
+    const PointId = request.headers.authorization;
+
+    const Point = await knex('points')
+        .where('id', id)
+        // .select('*')
+        .first(); //me retorna apenas 1 resultado
+    // if (Point.id !== PointId) {
+    //     return response.status(401).json({ error: 'ID não localizado, favor verificar.'});
+    // }    
+    
+    await knex('points').where('id', id).delete();
+
+    return response.status(204).send();
+}
   async index(request: Request, response: Response) {
     // Filtro(Query): Cidade, UF, items
     const { city, uf, items} = request.query; //informar o formato qdo receber por query

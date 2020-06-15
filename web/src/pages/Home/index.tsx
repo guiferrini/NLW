@@ -20,7 +20,7 @@ export default function Home() {
       const response = await api.get(`points/${id}`)
       console.log(response.data);
       localStorage.setItem('PointId', response.data.point.id);
-      localStorage.setItem('PointNmae', response.data.point.name)
+      localStorage.setItem('PointName', response.data.point.name)
       
       history.push('/user-point');
 
