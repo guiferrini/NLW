@@ -15,14 +15,14 @@ const Search = () => {
       <header>
           <img src={logo} alt="logo"/>
 
-          <Link to='/user-home'>
+          <Link to='/'>
             <FiArrowLeft />
             Voltar para Busca
           </Link>
       </header>
       <div>
 
-        Search
+        Point :)
       </div>
     </div>
   )
