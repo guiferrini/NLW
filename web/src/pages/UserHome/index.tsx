@@ -13,7 +13,7 @@ import logo from '../../assets/logo.svg';
 import api from '../../services/api';
 import { point } from 'leaflet';
 import { stringify } from 'querystring';
-import { number, string } from '@hapi/joi';
+import { number, string, object } from '@hapi/joi';
 
 interface UF {
   sigla: string;
@@ -53,6 +53,8 @@ interface Filtro2 {
     title: string,
     items: string,
     Array: string,
+    0: string,
+    1: string,
 }
 
 interface PropsId {
@@ -262,24 +264,18 @@ const User = () => {
 
           <h1>Resultado</h1>
           <ul>
-            {/* {pointInfos} */}
             {pointInfos.map(busca => (
               <li key={busca.id}>
-                <strong>Nome do Ponto: {busca.name}</strong>
-                <h1><img src={busca.image_url} alt="foto do ponto"/></h1>
-                <h1>Contato: </h1>
-                <h2>Whatsapp: {busca.whatsapp}</h2>
-                <h2>Email: {busca.email}</h2>
-                
-                
-                {/* <strong>{busca$1.Array}</strong> */}
-                {/* {pointInfos.map(busca$2 => busca$2,id)} */}
-                {/* <h2>{busca.email}</h2>
-                <h2>{busca.whatsapp}</h2>
-                <img src={busca.image_url} alt=""/>
-                <img src={busca.title} alt=""/>
-                <h2>{busca.items}</h2> */}
-              </li>
+                <div>
+                  <strong>Nome do Ponto: {busca.name}</strong>
+                  <h1><img src={busca.image_url} alt="foto do ponto"/></h1>
+                </div>
+                <div>
+                  <h1>Contato: </h1>
+                  <h2>Whatsapp: {busca.whatsapp}</h2>
+                  <h2>Email: {busca.email}</h2>                
+                </div>
+              </li> // funciona !
             ))}
           </ul>
                   
