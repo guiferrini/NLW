@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, ChangeEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 import api from '../../services/api';
@@ -12,6 +12,10 @@ const Search = () => {
   const history = useHistory();
   const PointName = localStorage.getItem('PointName');
   const PointId = localStorage.getItem('PointId');
+  const [inputData, setInputData] = useState({ //armazena infos email, whatsapp
+    email: '',
+    whatsapp: '',
+  }); 
   
   async function apagar() {
     try{
@@ -31,7 +35,23 @@ const Search = () => {
   }
 
   async function alterar() {
-    
+  try{ 
+
+
+    const { email, whatsapp } = inputData;
+    const response = await api.put(`points/${PointId}`, { email, whatsapp });
+
+    alert('Email e Whatsapp alterados com sucesso.')
+
+    history.push('/')
+  } catch (err) {
+    alert('Erro ao alterar Email e Whatsapp, favor efetuar novamente.')
+  }}
+
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+
+    setInputData({ ...inputData, [name]: value }); //'name' é generico p tds, tds tem 'name', value é o nome, email e whatsapp
   }
 
   return (
@@ -39,7 +59,7 @@ const Search = () => {
       <header>
           <img src={logo} alt="logo"/>
 
-          <Link to='/'>
+          <Link to='/'> 
             <FiArrowLeft />
             Voltar para Busca
           </Link>
@@ -55,7 +75,7 @@ const Search = () => {
             type="text"
             name="email"
             id="email"
-            // onChange={handleInputChange}
+            onChange={handleInputChange}
           />
           {/* { validacaoEmail && <div className="erro">{validacaoEmail}</div> } */}
         </div>
@@ -65,10 +85,10 @@ const Search = () => {
             type="text"
             name="whatsapp"
             id="whatsapp"
-            // onChange={handleInputChange}
+            onChange={handleInputChange}
           />
           {/* { validacaoWhatsapp && <div className="erro">{validacaoWhatsapp}</div> } */}
-          <button type="submit">Alterar</button>
+          <button onClick={alterar}>Alterar</button>
       </div>
     </div>
   )
