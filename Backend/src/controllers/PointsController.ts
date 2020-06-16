@@ -1,7 +1,6 @@
 //O ts n sabe o formato de resquest e response entao informo o formato manualmente
-import { Request, Response, request } from 'express'
+import { Request, Response } from 'express'
 import knex from '../database/connection'; // Connection witd Database
-import { string } from '@hapi/joi';
 
 class PointsController {
   async update(request: Request, response: Response) {
@@ -11,7 +10,6 @@ class PointsController {
 
     knex('points')
       .where({id}) 
-      // .select('id')
       .update({ email, whatsapp })
       .then(u => response.status(!!u?200:404).json({success:!!u}))
       .catch(e => response.status(500).json(e));
@@ -19,15 +17,6 @@ class PointsController {
 
   async delete(request: Request, response: Response) {
     const { id } = request.params;
-    // const point_id = request.headers.authorization;
-
-    // const points = await knex('points')
-    //     .where('id', id)
-    //     .select('point_id')
-    //     .first(); //me retorna apenas 1 resultado
-    // if (points.point_id !== point_id) {
-    //     return response.status(401).json({ error: 'ID não localizado, favor verificar.'});
-    // }    
     
     await knex('points').where('id', id).delete();
 
@@ -49,12 +38,7 @@ class PointsController {
       .where('city', String(city))
       .where('uf', String(uf))
       .distinct() //caso um pto tenha masi d 1 item do filtro, retorna o pto 1 vez só
-      //.select('points.*', 'item_id') // tras o n° do item, apenas 1 item
-      .select('points.*', 'point_items.item_id') // retorna id point c item id
-
-    //  await knex('items')
-    //   .join('point_items', 'items.id', '=', 'point_items.item_id')
-      //.select('items.title')
+      .select('points.*', 'point_items.item_id') // retorna id point c item id)
 
       const serializedPoints = points.map(point => {
         return {
@@ -144,7 +128,6 @@ class PointsController {
     await trx('point_items').insert(pointItems);
 
     await trx.commit(); // esse comento faz o insert na bd
-  
   
     return response.json({
       id: point_id,

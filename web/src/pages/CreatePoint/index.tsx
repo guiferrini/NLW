@@ -219,7 +219,6 @@ const CreatePoint = () => {
     }
 
     const response = await api.post('points', data);
-    // const response = await api.post('points', data);
     
     alert(`Ponto de coleta Criado! Seu ID é ${response.data.id}`);
 

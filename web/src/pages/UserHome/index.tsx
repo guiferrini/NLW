@@ -136,26 +136,26 @@ const User = () => {
       //busca Point por ID (com tds infos), dentro do UF e City
       const check = inputData.map((filter: any) => {return (filter.id)}); //tras tds ids
  
-      const b = [];
-      for (var i = 0; i < check.length; i++) {
+      const b = []; //Array só com IDs
+      for (var i = 0; i < check.length; i++) { 
           b[check[i]] = check[i];
       }
         const pointId = [];
         for (var key in b) {
             pointId.push(key);
-          }
+        }
       for (var i = 0; i < pointId.length; i++) {  
         
         const dadosId = await api.get(`/points/${pointId[i]}`)
         const foi = Object.values(dadosId.data) // com esse funciona       
         setPointsInfos((verdao) => verdao.concat(Object.values(dadosId.data)) ); //funciona com Array inteiro hehe
-         
-    } 
+        
+        console.log(foi)
+      } 
     } catch (err) {
       alert('falha')
     }
   }; 
-
   return (
     <div id="page-user">
         <header>

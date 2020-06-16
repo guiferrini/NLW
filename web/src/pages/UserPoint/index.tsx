@@ -7,7 +7,6 @@ import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 
 import './styles.css';
-import { response } from 'express';
 
 interface dataProps {
   email: string;
