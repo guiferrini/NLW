@@ -12,3 +12,133 @@
   justify-content: space-between;
   align-items: center;
 }
+
+#page-user-search header a {
+  color: var(--title-color);
+  font-weight: bold;
+  text-decoration: none;
+
+  display: flex;
+  align-items: center;
+}
+
+#page-user-search header a svg {
+  margin-right: 16px;
+  color: var(--primary-color);
+}
+
+#page-user-search main {
+  margin: 80px auto;
+  padding: 64px;
+  max-width: 730px;
+  background: #FFF;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#page-user-search main h1 {
+  font-size: 36px;
+}
+
+#page-user-search main div {
+  margin-top: 64px;
+  min-inline-size: auto;
+  border: 0;
+}
+
+#page-user-search main .erro {
+  color: red;
+  font-family: Ubuntu;  
+}
+
+#page-user-search main div legend {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+#page-user-search main div legend h2 {
+  font-size: 24px;
+}
+
+#page-user-search main div .field {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+#page-user-search main .field input{
+  flex: 1;
+  background: #F0F0F5;
+  border-radius: 8px;
+  border: 0;
+  padding: 16px 24px;
+  font-size: 16px;
+  color: #6C6C80;
+}
+
+#page-user-search main .field .erro {
+  color: red;
+  font-family: Ubuntu;
+}
+
+#page-user-search main .field select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  flex: 1;
+  background: #F0F0F5;
+  border-radius: 8px;
+  border: 0;
+  padding: 16px 24px;
+  font-size: 16px;
+  color: #6C6C80;
+}
+
+#page-user-search main .field input::placeholder {
+  color: #A0A0B2;
+}
+
+#page-user-search main .field label {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+#page-user-search main .field :disabled {
+  cursor: not-allowed;
+}
+
+#page-user-search main .field-check {
+  flex-direction: row;
+  align-items: center;
+}
+
+#page-user-search main .button-group{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#page-user-search div button {
+  width: auto;
+  height: 56px;
+  background: var(--primary-color);
+  border-radius: 8px;
+  color: #FFF;
+  font-weight: bold;
+  font-size: 16px;
+  border: 0;
+  margin-top: 40px;
+  transition: background-color 0.2s;
+  cursor: pointer;
+}
+
+#page-user-search div button:hover {
+  background: #3da86fe0;
+}

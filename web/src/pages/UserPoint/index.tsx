@@ -1,6 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
+import * as Yup from 'yup';
 import api from '../../services/api';
 
 import logo from '../../assets/logo.svg';
@@ -60,6 +61,8 @@ const Search = () => {
   try{ 
     const { email, whatsapp } = inputData;
     
+    //validação
+    const schema = Yup.object()
     //Validação email
     if (email.indexOf('@') == -1 || email.indexOf('.com') == -1) {
       setValidacaoEmail('Email inválido, favor verificar');
@@ -104,34 +107,42 @@ const Search = () => {
             Sair / Voltar para Busca
           </Link>
       </header>
-      <div>
+      <main>
         <h1>Bem vindo, {PointName} </h1>
         
-        <button onClick={apagar}>Apagar Ponto de Coleta</button> 
-        
-        <h2>Alterar/Confirme E-mail e Whatsapp</h2>
-          <label htmlFor="email">E-mail</label>
-          <input 
-            type="text"
-            name="email"
-            id="email"
-            onChange={handleInputChange}
-            placeholder={email}
-          />
-          { validacaoEmail && <div className="erro">{validacaoEmail}</div> }
-        </div>
-        <div className="field">
-          <label htmlFor="whatsapp">Whatsapp</label>
-          <input 
-            type="text"
-            name="whatsapp"
-            id="whatsapp"
-            onChange={handleInputChange}
-            placeholder={whatsapp}
-          />
-          {/* { validacaoWhatsapp && <div className="erro">{validacaoWhatsapp}</div> } */}
-          <button onClick={alterar}>Alterar</button>          
-      </div>
+        <div>
+          <legend>
+            <h2>Altere/Confirme E-mail e Whatsapp</h2>
+          </legend>
+
+          <div className="field">
+            <label htmlFor="email">E-mail</label>
+            <input 
+              type="text"
+              name="email"
+              id="email"
+              onChange={handleInputChange}
+              placeholder={email}
+            />
+            { validacaoEmail && <div className="erro">{validacaoEmail}</div> }
+          </div>
+          <div className="field">
+            <label htmlFor="whatsapp">Whatsapp</label>
+            <input 
+              type="text"
+              name="whatsapp"
+              id="whatsapp"
+              onChange={handleInputChange}
+              placeholder={whatsapp}
+            />
+            {/* { validacaoWhatsapp && <div className="erro">{validacaoWhatsapp}</div> } */}
+          </div>
+          <div className="button-group">
+            <button onClick={alterar}>Alterar Dados do Ponto do Coleta</button>          
+            <button onClick={apagar}>Apagar Ponto de Coleta</button> 
+          </div>
+          </div>
+      </main>
     </div>
   )
 };

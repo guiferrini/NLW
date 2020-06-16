@@ -16,7 +16,8 @@
     "react-dom": "^16.13.1",
     "react-leaflet": "^2.7.0",
     "react-scripts": "3.4.1",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "yup": "^0.29.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,6 +41,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-leaflet": "^2.5.1"
+    "@types/react-leaflet": "^2.5.1",
+    "@types/yup": "^0.29.3"
   }
 }

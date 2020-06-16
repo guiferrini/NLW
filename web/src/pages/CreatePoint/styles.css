@@ -157,6 +157,9 @@
 }
 
 #page-create-point form button {
+  display: flex;
+  flex-direction: row;
+
   width: 260px;
   height: 56px;
   background: var(--primary-color);
