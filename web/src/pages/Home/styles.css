@@ -2,9 +2,6 @@
   height: 100vh;
 
   background: url('../../assets/logo.svg') no-repeat 80% 58%;
-  /* background-repeat: no-repeat;
-  background-size: 30%;
-  background-position: 80% 50%; */
   /* background: url('../../assets/home-background.svg') no-repeat 500px bottom; */
 }
 
@@ -130,7 +127,7 @@
   background: #3da86fe0;
 }
 
-@media(max-width: 900px) {
+/* @media(max-width: 900px) {
   #page-home .content {
     align-items: center;
     text-align: center;
@@ -151,4 +148,4 @@
   #page-home .content main p {
     font-size: 24px;
   }
-}
+} */

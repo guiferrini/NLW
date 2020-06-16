@@ -114,15 +114,10 @@ const User = () => {
 
   }, [selectedUf]);
   
-  // const [id, setId] = useState('');
-  
-  // const [ponto, setponto] = useState('');
-
-  
   async function handleSubmit(event: FormEvent<HTMLFormElement>
     ): Promise<void> {
       event.preventDefault();
-    console.log(`uf=${selectedUf},City=${selectedCity}`);
+
     const uf = selectedUf;
     const city = selectedCity;
 
@@ -130,84 +125,32 @@ const User = () => {
     try {
 
       const ola = await api.get(`/points?uf=${uf}&items=1,%202,%203,%204,%205,%206&city=${city}`)
-      //.then(response => {
       const inputData = ola.data;
-      //console.log(`Filtro UF e CITY - ${inputData}`);
 
-      console.log(`1° get ${inputData}`);
-      console.log(typeof(inputData)); //respo: object
+      if(inputData == 0){  
+        alert (`Ainda não existe Ponto de Coleta cadastrados para a Cidade de ${city}.`)
+      }
 
-    //   type MyKnownType = {
-    //     infos: string;
-    //     photo: object;
-    //     outro: unknown[],
-    // };
-
-    //   const data: MyKnownType = await Array.from(inputData);
-    //     console.log(`data - ${data}`); //[object object]
-    //     console.log(typeof(data)) //object
       setFiltro(inputData);
  
-      // //busca Point por ID (com tds infos), dentro do UF e City
+      //busca Point por ID (com tds infos), dentro do UF e City
       const check = inputData.map((filter: any) => {return (filter.id)}); //tras tds ids
-      // //console.log(`esse é o check ${check}`);
-
+ 
       const b = [];
       for (var i = 0; i < check.length; i++) {
           b[check[i]] = check[i];
-          //console.log(b)
       }
         const pointId = [];
         for (var key in b) {
             pointId.push(key);
           }
-          console.log(`Array com IDs ${pointId}`)
-          console.log(typeof(pointId)) //object
-
-          // let homeArray = new Array(homes.length);
-          // let i = 0
-          // for (var key in homes) {
-          //     homeArray[i] =  homes[key];
-          //     i = i + 1;
-          // }
-
       for (var i = 0; i < pointId.length; i++) {  
-    
+        
         const dadosId = await api.get(`/points/${pointId[i]}`)
-        //console.log(`BUsca Point por ID - ${dadosId}`)
-        console.log(`2° get ${dadosId}`) //1 objeto com: 1 array e 1 objeto
-        console.log(dadosId.data.point.id) //retorna 2 objetos
         const foi = Object.values(dadosId.data) // com esse funciona       
-        
-        console.log(`foi ${foi}`) // [object object]
-        // setPointsInfos(Object.values(dadosId.data)); //funciona, com o ultimo do Array :)
         setPointsInfos((verdao) => verdao.concat(Object.values(dadosId.data)) ); //funciona com Array inteiro hehe
-        console.log(Object.values(foi)) //volta [{} {}]
-        console.log(setPointsInfos) //quebra
-        console.log(pointInfos) //vazio
-
-      // useEffect(() => {
-      //   for (var i = 0; i < pointId.length; i++) {  
-      //     const dadosId = await api.get(`/points/${pointId[i]}`)
-      // }, [])
-        
-        
-      //   const data = Array.from(foi);
-      //   console.log(`data - ${data}`);
-      //   //setPointsInfos(data); 
-
-
-      //   //PAREI AQUI, DATA ESTA VOLTANDO VAZIO! DATA N TEM TIPAGEM, VERIFICAR...
-
-      //   // type data = {
-      //   //   string;
-      //   // }
-      //   // setPointsInfos(data);
-      
-      //   //console.log(pointId)
-       
+         
     } 
-    
     } catch (err) {
       alert('falha')
     }
@@ -275,7 +218,7 @@ const User = () => {
                   <h2>Whatsapp: {busca.whatsapp}</h2>
                   <h2>Email: {busca.email}</h2>                
                 </div>
-              </li> // funciona !
+              </li> 
             ))}
           </ul>
                   

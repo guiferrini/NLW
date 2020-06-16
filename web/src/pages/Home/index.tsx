@@ -6,9 +6,6 @@ import api from '../../services/api';
 import './styles.css';
 import logo from '../../assets/logo.svg';
 
-
-
-
 export default function Home() {
   const history = useHistory(); 
   
