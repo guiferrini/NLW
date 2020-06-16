@@ -6,9 +6,15 @@ import api from '../../services/api';
 import logo from '../../assets/logo.svg';
 
 import './styles.css';
+import { response } from 'express';
+
+interface dataProps {
+  email: string;
+  whatsapp: string;
+  data: string;
+}
 
 const Search = () => {
-
   const history = useHistory();
   const PointName = localStorage.getItem('PointName');
   const PointId = localStorage.getItem('PointId');
@@ -16,8 +22,21 @@ const Search = () => {
     email: '',
     whatsapp: '',
   }); 
+  const [whatsapp, setWhatsapp] = useState(''); //guarda whatsapp
+  const [email, setEmail] = useState(''); //guarda email
+
+  
+
+  useEffect(() => {  
+    api.get(`points/${PointId}`).then(response => {
+      setEmail(response.data.point.email);
+      setWhatsapp(response.data.point.whatsapp)
+    })
+    
+  },[]) 
   
   async function apagar() {
+    //('Todas as informçõe serão periddas. Você tem certeza que quer apagar seu Ponto de Coleta?');
     try{
       await api.delete(`points/${PointId}`, {
         headers: {
@@ -36,8 +55,6 @@ const Search = () => {
 
   async function alterar() {
   try{ 
-
-
     const { email, whatsapp } = inputData;
     const response = await api.put(`points/${PointId}`, { email, whatsapp });
 
@@ -55,6 +72,7 @@ const Search = () => {
   }
 
   return (
+    
     <div id="page-user-search">
       <header>
           <img src={logo} alt="logo"/>
@@ -65,8 +83,8 @@ const Search = () => {
           </Link>
       </header>
       <div>
-
         <h1>Bem vindo, {PointName} </h1>
+        
         <button onClick={apagar}>Apagar Ponto de Coleta</button>
 
         <h2>Alterar E-mail e Whatsapp</h2>
@@ -76,6 +94,7 @@ const Search = () => {
             name="email"
             id="email"
             onChange={handleInputChange}
+            placeholder={email}
           />
           {/* { validacaoEmail && <div className="erro">{validacaoEmail}</div> } */}
         </div>
@@ -86,6 +105,7 @@ const Search = () => {
             name="whatsapp"
             id="whatsapp"
             onChange={handleInputChange}
+            placeholder={whatsapp}
           />
           {/* { validacaoWhatsapp && <div className="erro">{validacaoWhatsapp}</div> } */}
           <button onClick={alterar}>Alterar</button>
