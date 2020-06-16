@@ -11,6 +11,7 @@ import Dropzone from '../../components/Dropzone/index';
 import './styles.css';
 
 import logo from '../../assets/logo.svg';
+import { number } from '@hapi/joi';
 
 interface Item {
   id: number;
@@ -162,7 +163,8 @@ const CreatePoint = () => {
       // const x = Number(whatsapp);
       // console.log(typeof(x)); 
       // const letras = ['qwertyuiopasdfghjklçzxcvbnm,.-_()'];
-      // if (whatsapp.indexOf('letras')) {
+      // const numero = [1234567890]
+      // if (whatsapp.indexOf(letras)) {
       //   setValidacaoWhatsapp('Favor digitar apenas Números');
       // } else {
       //   setValidacaoWhatsapp('');

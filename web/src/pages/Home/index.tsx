@@ -27,17 +27,6 @@ export default function Home() {
     } catch (err) {
       alert('ID não encontrado, tente novamente.')
     }
-  //   try {
-  //     const response = await api.post('sessions', { id });
-  
-  //     localStorage.setItem('ongId', id); //p ter disponível em toda minha aplicação
-  //     localStorage.setItem('ongName', response.data.name);
-  
-  //     history.push('/profile');
-  // } catch (err) {
-  //     alert('Falha no login, tente novamente.');
-  // }
-  
   }
   return (
     <div id="page-home">

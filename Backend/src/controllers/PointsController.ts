@@ -15,7 +15,6 @@ class PointsController {
       .update({ email, whatsapp })
       .then(u => response.status(!!u?200:404).json({success:!!u}))
       .catch(e => response.status(500).json(e));
-      
   }
 
   async delete(request: Request, response: Response) {
