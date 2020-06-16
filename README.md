@@ -1,12 +1,13 @@
 # NLW
 
+  <img src="./web/src/assets/logo.svg">
 <h1>
   Ecoleta: Seu marketplace de coleta de resíduos
 </h1>
 
 <h1>
   
-  video
+  <img src="./web/src/assets/Ecoleta.gif">
 </h1>
 
 ## Sobre
