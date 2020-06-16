@@ -37,27 +37,29 @@ const Search = () => {
   },[]) 
   
   async function apagar() {
-    //('Todas as informçõe serão periddas. Você tem certeza que quer apagar seu Ponto de Coleta?');
-    try{
-      await api.delete(`points/${PointId}`, {
-        headers: {
-            Authorization: PointId,
-        }
-    });
+    const r = window.confirm("Todas as informçõe serão peridas. Você tem certeza que quer apagar seu Ponto de Coleta?"); 
+        if(r == true) {
+      try{
+        await api.delete(`points/${PointId}`, {
+          headers: {
+              Authorization: PointId,
+          }
+      });
 
-    alert('Ponto de Coleta Apagado.')
+      alert('Ponto de Coleta Apagado.')
 
-    history.push('/');
+      history.push('/');
 
-    } catch (err) {
-      alert('ERRO. Não foi possível apagar esse ponto de coleta, favor verificar informações.')
-    }
+      } catch (err) {
+        alert('ERRO. Não foi possível apagar esse ponto de coleta, favor verificar informações.')
+      }
   }
+}
 
   async function alterar() {
   try{ 
     const { email, whatsapp } = inputData;
-
+    
     //Validação email
     if (email.indexOf('@') == -1 || email.indexOf('.com') == -1) {
       setValidacaoEmail('Email inválido, favor verificar');
@@ -99,15 +101,15 @@ const Search = () => {
 
           <Link to='/'> 
             <FiArrowLeft />
-            Voltar para Busca
+            Sair / Voltar para Busca
           </Link>
       </header>
       <div>
         <h1>Bem vindo, {PointName} </h1>
         
-        <button onClick={apagar}>Apagar Ponto de Coleta</button>
-
-        <h2>Alterar E-mail e Whatsapp</h2>
+        <button onClick={apagar}>Apagar Ponto de Coleta</button> 
+        
+        <h2>Alterar/Confirme E-mail e Whatsapp</h2>
           <label htmlFor="email">E-mail</label>
           <input 
             type="text"
@@ -127,8 +129,8 @@ const Search = () => {
             onChange={handleInputChange}
             placeholder={whatsapp}
           />
-          { validacaoWhatsapp && <div className="erro">{validacaoWhatsapp}</div> }
-          <button onClick={alterar}>Alterar</button>
+          {/* { validacaoWhatsapp && <div className="erro">{validacaoWhatsapp}</div> } */}
+          <button onClick={alterar}>Alterar</button>          
       </div>
     </div>
   )
