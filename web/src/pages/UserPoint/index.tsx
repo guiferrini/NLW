@@ -25,7 +25,8 @@ const Search = () => {
   const [whatsapp, setWhatsapp] = useState(''); //guarda whatsapp
   const [email, setEmail] = useState(''); //guarda email
 
-  
+  const [validacaoEmail, setValidacaoEmail] = useState(''); //validar email input
+  const [validacaoWhatsapp, setValidacaoWhatsapp] = useState(''); //validar email input
 
   useEffect(() => {  
     api.get(`points/${PointId}`).then(response => {
@@ -56,6 +57,25 @@ const Search = () => {
   async function alterar() {
   try{ 
     const { email, whatsapp } = inputData;
+
+    //Validação email
+    if (email.indexOf('@') == -1 || email.indexOf('.com') == -1) {
+      setValidacaoEmail('Email inválido, favor verificar');
+    } else {
+      setValidacaoEmail('');
+    }
+
+    //Validação whatsapp
+    // const x = Number(whatsapp);
+    // console.log(typeof(x)); 
+    // const letras = ['qwertyuiopasdfghjklçzxcvbnm,.-_()'];
+    // const numero = [1234567890]
+    // if (whatsapp.indexOf(letras)) {
+    //   setValidacaoWhatsapp('Favor digitar apenas Números');
+    // } else {
+    //   setValidacaoWhatsapp('');
+    // }
+
     const response = await api.put(`points/${PointId}`, { email, whatsapp });
 
     alert('Email e Whatsapp alterados com sucesso.')
@@ -96,7 +116,7 @@ const Search = () => {
             onChange={handleInputChange}
             placeholder={email}
           />
-          {/* { validacaoEmail && <div className="erro">{validacaoEmail}</div> } */}
+          { validacaoEmail && <div className="erro">{validacaoEmail}</div> }
         </div>
         <div className="field">
           <label htmlFor="whatsapp">Whatsapp</label>
@@ -107,7 +127,7 @@ const Search = () => {
             onChange={handleInputChange}
             placeholder={whatsapp}
           />
-          {/* { validacaoWhatsapp && <div className="erro">{validacaoWhatsapp}</div> } */}
+          { validacaoWhatsapp && <div className="erro">{validacaoWhatsapp}</div> }
           <button onClick={alterar}>Alterar</button>
       </div>
     </div>
